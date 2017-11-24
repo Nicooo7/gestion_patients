@@ -1,0 +1,54 @@
+{% load static %}
+{% load materialize %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Titre</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="static/materialize/css/materialize.css"/>
+
+    	<script src="static/jquery-3.2.1.js"> </script>
+    	<script type="text/javascript" src="static/materialize/js/materialize.min.js"></script>
+    </head>
+
+    <body>
+
+            
+
+        <div class="titre"> <h3>DEMANDE EXAMEN RADIOLOGIQUE</h3> </div>
+        <div class="section"></div>
+        <form action="rentrer_patient.html" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="col s12">
+                <button class="btn waves-effect waves-light" id="bouton">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+        
+        <div class="section"></div>
+        <div class="col s12">
+            <button class="btn waves-effect waves-light" id="bouton_afficher">afficher la liste des patients en attente
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+<script>
+$(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
+
+    	<script>
+            $('#bouton_afficher').click(function(){
+                document.location.href="afficher_patient.html"; 
+                
+});
+    	</script>
+
+ 
+    </body>
+</html>

@@ -1,0 +1,51 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Titre</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="static/materialize/css/materialize.css"/>
+
+    	<script src="static/jquery-3.2.1.js"> </script>
+    	<script type="text/javascript" src="static/materialize/js/materialize.min.js"></script>
+    </head>
+
+    <body>
+    	
+
+    	<div class="titre"> <h3>LISTE DES PATIENTS</h3> </div>
+
+        <table class="striped">
+        <thead>
+          <tr>
+              <th>Nom</th>
+              <th>prenom</th>
+              <th>ipp</th>
+              <th>degre d'urgene</th>
+              <th>type d'examen</th>
+          </tr>
+        </thead>
+
+        <tbody>
+           {% for demande in demandes %}
+          <tr>
+            <td>{{demande.nom}}</td>
+            <td>{{demande.prenom}}</td>
+            <td>{{demande.ipp}}</td>
+             <td>{{demande.degre_urgence}}</td>
+             <td>{{demande.type_examen}}</td>
+          </tr> 
+          {% endfor %} 
+        </tbody>
+      </table>
+        
+        
+        
+        
+    </body>
+</html>
+
+
