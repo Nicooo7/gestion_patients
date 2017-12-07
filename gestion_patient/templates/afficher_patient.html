@@ -8,41 +8,95 @@
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="static/materialize/css/materialize.css"/>
+         <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 
     	<script src="static/jquery-3.2.1.js"> </script>
     	<script type="text/javascript" src="static/materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     </head>
 
-    <body>
-    	
-
-    	<div class="titre"> <h3>LISTE DES PATIENTS</h3> </div>
-
-        <table class="striped">
+    <body class="grey lighten-2">
+    	<div class="row">
+          <div class="col s12">
+            <div class="card white ">
+            <div class="card-content black-text">
+                <span> <h2 class= "blue">Liste des patients </h2></span>
+                <table class="striped" id="tableau_patients">
         <thead>
           <tr>
+              <th>degre d'urgence</th>
               <th>Nom</th>
               <th>prenom</th>
-              <th>ipp</th>
-              <th>degre d'urgene</th>
               <th>type d'examen</th>
+              <th>indication</th>
+              <th>injection</th>
+              <th>heure</th>
+              <th>fait? </th>
+              <th>supprimer la demande</th>
+              
           </tr>
         </thead>
 
         <tbody>
            {% for demande in demandes %}
-          <tr>
-            <td>{{demande.nom}}</td>
+            {% if demande.supprimer != "oui" %} 
+            
+          <tr  {% if demande.realisation == "oui" %} style="color:grey" {% endif %} >
+              
+              {% if demande.degre_urgence == "immédiat" %}
+             <td> <a id="urgence" class="btn-floating  waves-effect waves-light orange lighten-1"><i onclick="document.location.href='realisation_patient.html?id={{demande.id}}'" class="material-icons">directions_run</i></a></td>
+               {% else %}
+               <td> <a id="urgence" class="btn-floating  waves-effect waves-light blue lighten-1"><i onclick="document.location.href='realisation_patient.html?id={{demande.id}}'" class="material-icons">directions_walk</i></a></td>
+              {% endif %} 
+            <td>{{demande.nom|upper}}</td>
             <td>{{demande.prenom}}</td>
-            <td>{{demande.ipp}}</td>
-             <td>{{demande.degre_urgence}}</td>
+             
              <td>{{demande.type_examen}}</td>
-          </tr> 
+              <td>{{demande.indication}}</td>
+              
+               {% if demande.injection == "oui" %}
+             <td> <a id="urgence" class="btn-floating  waves-effect waves-light grey lighten-1"><i onclick="document.location.href='realisation_patient.html?id={{demande.id}}'" class="material-icons">colorize</i></a></td>
+               {% else %}
+               <td> </td>
+              {% endif %} 
+              
+          
+               
+             
+              <td><span class="btn grey">{{demande.heure|time:"H:i"}}</span></td>
+              
+              
+              
+               <td>
+                  {% if demande.realisation != "non" %}
+                   <a id="fait" class="btn-floating  waves-effect waves-light green lighten-1"><i onclick="document.location.href='realisation_patient.html?id={{demande.id}}'" class="material-icons">done</i></a>
+                  {% else %}
+                  <a id="fait_{{demande.id}}" class="btn-floating  waves-effect waves-light red lighten-1"><i onclick="document.location.href='realisation_patient.html?id={{demande.id}}'" class="material-icons">done</i></a></td>
+                   {% endif %}
+              
+              
+              <td><a id="supprimer" class="btn  waves-effect waves-light grey lighten-1" onclick="document.location.href='supprimer_patient.html?id={{demande.id}}'"><i class="material-icons">delete</i></a></td>
+              
+            </tr> 
+            {% endif %}
           {% endfor %} 
         </tbody>
       </table>
+            </div>
+          </div>
+        </div>
+      </div>
+            
+
+       
         
+         <button class="btn waves-effect waves-light white" id="rentrer"> <a href="rentrer_patient.html"> rentrer un nouveau patient</a>
         
+        <script>
+            jQuery('#tableau_patients').dataTable()
+           
+                  
+        </script>
         
         
     </body>

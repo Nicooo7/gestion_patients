@@ -7,25 +7,45 @@ class Demande(models.Model):
    
     degre_urgence_choix = (
         ('H24', 'H24'),
-        ('H48', 'H48'),
-        ('J7', 'J7'),
-        ('programmer', 'programmer'),
+        ('immédiat', 'immédiat'),
     )
     
-    type_examen = (
-        ('scanner', 'scanner'),
-        ('IRM', 'IRM'),
-        ('echographie', 'echographie'),
-        ('autre', 'autre'),
+    type_examen_choix = (
+        ('scanner cerebral', 'scanner cerebral'),
+        ('scanner AP', 'scanner AP'),
+        ('scanner TAP', 'scanner TAP'),
+        ('angioscanner pulmonaire', 'angioscanner pulmonaire'),
+        ('uroscanner', 'uroscanner'),
+        ('scanner Thoracique', 'scanner thoracique'),
+    )
+    injection_choix = (
+        ('oui', 'oui'),
+        ('non', 'non'),
+        ('à voir', 'à voir')
+    )
+    realisation_choix =(
+        ('oui', 'oui'),
+        ('non', 'non'),
     )
     
     
     prenom = models.CharField(max_length=30)
     nom = models.CharField(max_length=30)
-    ipp = models.PositiveIntegerField()
+    indication = models.CharField(max_length=300, null=True)
     degre_urgence = models.CharField(
         max_length=10,
         choices=degre_urgence_choix)
     type_examen= models.CharField(
+        max_length=30,
+        choices=type_examen_choix)
+    injection = models.CharField(
+        max_length=30,
+        choices=injection_choix)
+    realisation = models.CharField(
+        max_length=30, 
+        choices=realisation_choix, null=True, default="non")
+    suppression = models.CharField(
         max_length=10,
-        choices=type_examen)
+        choices=realisation_choix,null=True, default="non")
+    heure= models.DateTimeField(null = True)
+    

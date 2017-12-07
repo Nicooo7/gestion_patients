@@ -23,6 +23,7 @@ from random import *
 from unidecode import unidecode
 from django.utils.safestring import mark_safe
 from.forms import DemandeForm
+from django.utils import timezone
 
 
 
@@ -36,8 +37,10 @@ app_name = 'gestion_patient'
 def rentrer_patient(request):
     if request.method == 'POST':
         form = DemandeForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): 
             demande = form.save()
+            demande.heure = timezone.now()
+            demande.save()
             print("demande sauvegardée")
         else:
             print("formulaire non valide")
@@ -46,11 +49,28 @@ def rentrer_patient(request):
                 
     else:
         form = DemandeForm()
+        
+    demandes= Demande.objects.all()    
     return render(request, 'rentrer_patient.html', {'form': form})
    
 
 def afficher_patient(request):
-    demandes = Demande.objects.all()
+    demandes= Demande.objects.all()
+    return render(request, 'afficher_patient.html', {"demandes":demandes})
+
+def supprimer_patient(request):
+    id = str(request.GET['id'])
+    demande = Demande.objects.get(id=id)
+    demande.delete()
+    demandes= Demande.objects.all()
+    return render(request, 'afficher_patient.html', {"demandes":demandes})
+
+def realisation_patient(request):
+    id = str(request.GET['id'])
+    demande = Demande.objects.get(id=id)
+    demande.realisation = "oui"
+    demande.save()
+    demandes= Demande.objects.all()
     return render(request, 'afficher_patient.html', {"demandes":demandes})
 
 

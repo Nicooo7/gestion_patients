@@ -14,39 +14,57 @@
     	<script type="text/javascript" src="static/materialize/js/materialize.min.js"></script>
     </head>
 
-    <body>
+    <body class="grey lighten-2">
 
             
 
-        <div class="titre"> <h3>DEMANDE EXAMEN RADIOLOGIQUE</h3> </div>
+        <div class="titre blue"> <h3>DEMANDE EXAMEN RADIOLOGIQUE</h3> </div>
         <div class="section"></div>
-        <form action="rentrer_patient.html" method="post">
+        
+        <div class="row">
+          <div class="col s12">
+            <div class="card white ">
+            <div class="card-content black-text">
+              
+               <form action="rentrer_patient.html" method="post">
             {% csrf_token %}
             {{form.as_p}}
-            <div class="col s12">
-                <button class="btn waves-effect waves-light" id="bouton">Submit
-                    <i class="material-icons right">send</i>
-                </button>
+                    <div class="col s12">
+                        <button class="btn waves-effect waves-light blue lighten-2" id="bouton_submit">Submit
+
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+               </form>
             </div>
-        </form>
+          </div>
+        </div>
+      </div>
         
+       
         <div class="section"></div>
         <div class="col s12">
-            <button class="btn waves-effect waves-light" id="bouton_afficher">afficher la liste des patients en attente
+            <button class="btn waves-effect waves-light blue" id="bouton_afficher">afficher la liste des patients en attente
                 <i class="material-icons right">send</i>
             </button>
+            
         </div>
 <script>
 $(document).ready(function() {
     $('select').material_select();
+    $('#id_indication').css("height","100px");
+    $('#bouton_afficher').click(function(){
+            document.location.href="afficher_patient.html"; 
+                });
   });
 </script>
 
     	<script>
-            $('#bouton_afficher').click(function(){
-                document.location.href="afficher_patient.html"; 
-                
-});
+          
+           
+            
+            
+            
     	</script>
 
  

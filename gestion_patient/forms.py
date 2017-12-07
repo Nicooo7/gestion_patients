@@ -6,9 +6,12 @@ from gestion_patient.models import Demande
 class DemandeForm(ModelForm):
     class Meta:
         model = Demande
-        fields = ['prenom', 'nom', 'ipp', 'degre_urgence','type_examen']
+        fields = ['nom','prenom', 'indication','degre_urgence','type_examen','injection']
         widgets = {
        'degre_urgence':forms.Select,
-       'type_examen':forms.Select
+       'type_examen':forms.Select,
+       'injection':forms.Select, 
+       'indication': forms.Textarea,
+            
         }
         

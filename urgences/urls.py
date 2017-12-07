@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rentrer_patient', views.rentrer_patient, name = 'rentrer_patient'),
     url(r'^afficher_patient', views.afficher_patient, name = 'afficher_patient'),
+     url(r'^supprimer_patient', views.supprimer_patient, name = 'afficher_patient'),
+     url(r'^realisation_patient', views.realisation_patient, name = 'afficher_patient'),
     ]
 
 

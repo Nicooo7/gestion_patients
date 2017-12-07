@@ -25,7 +25,7 @@ SECRET_KEY = 'p8xru!uzi4*jwhhee*_2jui1c1kkn^vvmntr14x+3k4-q(!7+&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-FR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Indian/Reunion'
 
 USE_I18N = True
 
