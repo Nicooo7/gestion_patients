@@ -68,6 +68,7 @@ def supprimer_patient(request):
 def realisation_patient(request):
     id = str(request.GET['id'])
     demande = Demande.objects.get(id=id)
+    
     demande.realisation = "oui"
     demande.save()
     demandes= Demande.objects.all()

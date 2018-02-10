@@ -1,5 +1,4 @@
 {% load static %}
-{% load materialize %}
 
 <!DOCTYPE html>
 <html>
@@ -22,13 +21,13 @@
         <div class="section"></div>
         
         <div class="row">
-          <div class="col s12">
+          <div class="col s7">
             <div class="card white ">
             <div class="card-content black-text">
               
                <form action="rentrer_patient.html" method="post">
             {% csrf_token %}
-            {{form.as_p}}
+            {{form.as_table}}
                     <div class="col s12">
                         <button class="btn waves-effect waves-light blue lighten-2" id="bouton_submit">Submit
 
