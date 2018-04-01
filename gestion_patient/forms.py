@@ -11,7 +11,6 @@ class DemandeForm(ModelForm):
        'degre_urgence':forms.Select,
        'type_examen':forms.Select,
        'injection':forms.Select, 
-       'indication': forms.Textarea,
-            
+       'indication': forms.Textarea,    
         }
         

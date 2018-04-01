@@ -1,0 +1,19 @@
+{% extends "scanner.html" %}
+{% load static %}
+
+{% block titre %} 
+{{titre}}
+{% endblock %}
+
+{% block formulaire %}
+{% endblock formulaire %}
+
+{% block contenu %}
+{% endblock contenu %}
+
+{% block regions_anatomiques %}
+    <!-- choix des régions anatomiques -->
+    {% include "html/collapsible_double.html" with niveau_1=datas.regions_anatomiques niveau_2=datas.thorax_titres %} 
+{% endblock regions_anatomiques %}
+
+

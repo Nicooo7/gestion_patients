@@ -1,0 +1,34 @@
+  <ul class="collapsible">
+                {% for rubrique in datas.rubriques %}
+                <li>
+                 
+                  <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{rubrique}}</div>
+                        <div class="collapsible-body">
+                            {% if rubrique == "technique" %}
+                              {% for element_a_cocher in datas.technique %}
+                                 {% include "html/formulaire_generique.html" with element_a_cocher=element_a_cocher %}
+                              {% endfor %}
+                            {% endif %}
+
+                            {% if rubrique == "indication" %}
+                              {% for element_a_cocher in datas.indication %}
+                                 {% include "html/formulaire_generique.html" with element_a_cocher=element_a_cocher %}
+                              {% endfor %}
+                            {% endif %}
+
+                            {% if rubrique == "resultat" %}
+                              {% for element_a_cocher in datas.resultat %}
+                                 {% include "html/formulaire_generique.html" with element_a_cocher=element_a_cocher %}
+                              {% endfor %}
+                            {% endif %}
+
+                            {% if rubrique == "conclusion" %}
+                              {% for element_a_cocher in datas.conclusion %}
+                                 {% include "html/formulaire_generique.html" with element_a_cocher=element_a_cocher %}
+                              {% endfor %}
+                            {% endif %}
+                        </div>
+                  
+                </li>
+                {% endfor %}
+            </ul>
