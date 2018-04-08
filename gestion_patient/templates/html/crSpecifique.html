@@ -1,0 +1,82 @@
+<script>
+	
+	$(document).ready(function() {
+
+		
+		$('.optionnel').hide()	
+		$('[id="{{idItemIndication}}"]').click(function()
+						{
+						$(".ELEMENTS_SPECIFIQUES_DE_{{itemIndication}}").toggle()
+						});
+
+
+		
+		$("#soumission").click(function() {
+
+		//fonction retournant un paragraphe, selon les cases cochées dans ce paragraphe
+			function paragraphe(base, cat, defaut){		
+												var liste = [];
+													$(':input[categorie='+cat+']').each(function() {
+
+														if ($(this).is(':checked'))
+															{liste.push($(this).attr('id'));}
+													   	else 
+													   		{liste.push($(this).attr('defaut'));}
+													   	resultat = base  
+														for (l in liste) {resultat = resultat + "\n" + liste[l]}
+
+													  });
+
+												return resultat
+
+											  
+												}
+
+		//fonction retournant la conclusion, selon le texte écrit dans ce paragraphe:
+			function concl(base, cat, defaut){
+												var liste = [];
+												$(':input[type="text"][categorie='+cat+']').each(function() {liste.push($(this).text());});
+												resultat = base  
+												for (l in liste) {resultat = resultat + " " + liste[l]} 
+												return resultat   
+												}								
+
+
+				
+						
+				//INDICATION:	
+					indication = paragraphe(base="", cat="indication", defaut="{{defautIndication}}")+ "\n"		
+
+				//TECHNIQUE: 	
+					technique = paragraphe(base="", cat="technique", defaut="{{defautTechnique}}")+ "\n"		
+				
+				//RESULTAT:
+					//spécifique dyspnée: poumons:
+					if ($(".ELEMENTS_SPECIFIQUES_DE_{{itemIndication}}").is(":visible"))
+						{resultats_dyspnee = paragraphe(base="", cat="resultat_dyspnee")+ "\n"
+						resultats_autres = ""}
+					else {
+						resultats_dyspnee =""
+						resultats_autres = paragraphe(base="", cat="resultat_autre")+ "\n"}
+
+					corps = resultats_dyspnee + resultats_autres
+
+
+				//CONCLUSION:
+					conclusion = concl(base="", cat="conclusion")+ "\n"	
+
+			
+					texte_final= "INDICATION:\n" + indication + "TECHNIQUE:\n" + technique + "RESULTATS:\n" + corps
+					var toCopy  = texte_final
+
+					
+			        copyToClipboard(toCopy, id="#textarea");
+  			   			 					
+					alert(texte_final)	
+									
+
+									});
+
+
+		});
+	</script>

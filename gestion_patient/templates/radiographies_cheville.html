@@ -1,52 +1,12 @@
-{% extends "radiographie.html" %}
+{% extends "radiographies_type.html" %}
 {% load static %}
 
+{% block CRspecifique %}
 
-{% block contenu %}
+<script>
+
+	alert("yeyeyeye")
 	
-
-
-    {% for t in liste_des_titres %}
-	    <ul class="collapsible">
-	        <li>
-	        	{% if t.optionnel == "oui" %}
-					<div class="collapsible-header optionnel {{t.cl}}"  id="{{t.intitule}}"><i class="material-icons">filter_drama</i>{{t.intitule}}</div>
-				{% else %}
-	        		<div class="collapsible-header {{t.cl}}"  id="{{t.intitule}}"><i class="material-icons">filter_drama</i>{{t.intitule}}</div>
-	        	{% endif %}
-	        	<div class="collapsible-body">
-	        	{% for e in liste_des_items %}
-	        		{% if e.titre_item == t.intitule %}
-						   	{% include "html/formulaire_generique.html" with element_a_cocher=e.label_element id=e.formule categorie=e.categorie defaut=e.defaut optionnel=e.optionnel %}
-					{% endif %}
-				{% endfor %}
-				</div>
-	        </li>
-		</ul>
-	{% endfor %}
-
-
-	<!--bouton de soumission) -->
-	<div class="section"> </div>
-
-	<button class="btn waves-effect waves-light blue toCopy" type="submit" name="action" id="soumission" >  CR
-    <i class="material-icons right">send</i>
-  </button>
-
-  	<TEXTAREA id="textarea"></TEXTAREA>
-
- 
-{% endblock contenu %}
-
-
-{% block regions_anatomiques %}
-{% endblock regions_anatomiques %}
-
-
-{% block autre_script %}
-
-
-	<script>
 	$(document).ready(function() {
 		
 		$('.optionnel').hide()	
@@ -54,7 +14,8 @@
 						{
 						$(".ELEMENTS_SPECIFIQUES_DE_DYSPNEE").toggle()
 						});
-		
+
+
 		
 		$("#soumission").click(function() {
 
@@ -114,34 +75,18 @@
 					texte_final= "INDICATION:\n" + indication + "TECHNIQUE:\n" + technique + "RESULTATS:\n" + corps
 					var toCopy  = texte_final
 
-					function copyToClipboard(element) {
-									        textRange = $('#textarea');
-									        
-									        textRange.html(element)
-									        //$(textRange).focus()
-									        $(textRange).select();
-									        document.execCommand("Copy");
-									   			 }
-
-			        copyToClipboard(toCopy);
-  			   			 
-										
-					alert(texte_final )	
+					
+			        copyToClipboard(toCopy, id="#textarea");
+  			   			 					
+					alert(texte_final)	
 									
 
 									});
 
 
-
-
-				
-
-
-
-
-
-
-
 		});
 	</script>
-{% endblock autre_script%}
+
+
+
+{% endblock CRspecifique%}

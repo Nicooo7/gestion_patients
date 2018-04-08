@@ -1,12 +1,18 @@
-            <ul class="collapsible">
-                {% for a in niveau_1 %}
-                <li>
-                  <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{a}}</div>
-                        <div class="collapsible-body">
-                            {% for b in niveau_2 %}
-                               <p> <a href= "{{datas.page}}_{{b}}.html" class="waves-effect blue waves-light btn">{{b|capfirst}} </a></p>
-                            {% endfor %}
-                        </div>
-                </li>
-                {% endfor %}
-            </ul>
+{% load static %} 
+ 
+
+        
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header">
+                    {{a}}
+                </div>     
+
+                <div class="collapsible-body">
+                    {% for b in liste %}
+                       <p>
+                        <a href="{{titre}}/{{b}}/" class="waves-effect blue waves-light btn">{{b|capfirst}} </a></p>
+                    {% endfor %}
+                </div>
+            </li>
+        </ul>

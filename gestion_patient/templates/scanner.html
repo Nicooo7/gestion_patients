@@ -20,21 +20,16 @@
 
             
 
-        <div class="titre blue"> <h3 class="center">{% block titre %} SCANNER {% endblock titre %}</h3> </div>
+        <div class="titre blue"> <h3 class="center">{% block titre %} SCANNER  {% endblock titre %}</h3> </div>
         <div class="section"></div>
         
     {% block regions_anatomiques %}
-        <!-- choix des régions anatomiques -->
-            {% include "html/collapsible_double.html" with niveau_1=datas.regions_anatomiques niveau_2=datas.thorax_titres %} 
+        {% for item in liste %}
+            {% include "html/collapsible_double.html" with a=item.region_anatomique liste=item.sous_rubriques titre=titre adresseImage=item.adresseImage path="Users/nicolas/Desktop/urgences/gestion_patient/static"%} 
+        {% endfor %}
     {% endblock regions_anatomiques %}
 
 
-    {% block contenu %}
-    {% endblock contenu %}
-
-
-    {% block formulaire %}
-    {% endblock formulaire %}
 
 {% block script %}        
 <script>
@@ -51,8 +46,18 @@ $(document).ready(function() {
 {% endblock script %} 
 
 
+{% block formulaire %}
+{% endblock formulaire %}
+
+{% block contenu %}
+{% endblock contenu %}
+
 {% block autre_script %}
 {% endblock autre_script %}
+
+
+{% block CRspecifique %}
+{% endblock CRspecifique %}
 
 
 
