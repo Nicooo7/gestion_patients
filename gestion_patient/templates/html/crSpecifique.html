@@ -24,7 +24,13 @@
 													   	else 
 													   		{liste.push($(this).attr('defaut'));}
 													   	resultat = base  
-														for (l in liste) {resultat = resultat + "\n" + liste[l]}
+														for (l in liste) {
+
+															if (liste[l] != "") {resultat = resultat + "\n" + liste[l]}
+
+
+
+																			}
 
 													  });
 
@@ -44,30 +50,32 @@
 
 
 				
+
+
 						
 				//INDICATION:	
-					indication = paragraphe(base="", cat="indication", defaut="{{defautIndication}}")+ "\n"		
+					indication = paragraphe(base="", cat="indication", defaut="{{defautIndication}}")		
 
 				//TECHNIQUE: 	
-					technique = paragraphe(base="", cat="technique", defaut="{{defautTechnique}}")+ "\n"		
+					technique = paragraphe(base="", cat="technique", defaut="{{defautTechnique}}")		
 				
 				//RESULTAT:
-					//spécifique dyspnée: poumons:
-					if ($(".ELEMENTS_SPECIFIQUES_DE_{{itemIndication}}").is(":visible"))
-						{resultats_dyspnee = paragraphe(base="", cat="resultat_dyspnee")+ "\n"
+					//spécifique :
+					if ($(".{{cible}}").is(":visible"))
+						{resultats = paragraphe(base="", cat="{{cible}}")+ "\n"
 						resultats_autres = ""}
 					else {
-						resultats_dyspnee =""
+						resultats =""
 						resultats_autres = paragraphe(base="", cat="resultat_autre")+ "\n"}
 
-					corps = resultats_dyspnee + resultats_autres
+					corps = resultats + resultats_autres
 
 
 				//CONCLUSION:
 					conclusion = concl(base="", cat="conclusion")+ "\n"	
 
 			
-					texte_final= "INDICATION:\n" + indication + "TECHNIQUE:\n" + technique + "RESULTATS:\n" + corps
+					texte_final= "Compte rendu radiologique pour les urgences:\n\nINDICATION:" + indication + "\n\n" + "TECHNIQUE:" + technique + "\n\n"+ "RESULTATS:" + corps
 					var toCopy  = texte_final
 
 					

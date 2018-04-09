@@ -13,7 +13,7 @@
 		
 		$("#CRTYPE").click(function() {
 
-			compteRenduType = compteRenduType.replace(/xx/g,"\n")
+			compteRenduType = "Relecture de radiographies pour les urgences\n\n" + compteRenduType.replace(/xx/g,"\n")
 			copyToClipboard(compteRenduType, id="#textarea");
   			   			 					
 				

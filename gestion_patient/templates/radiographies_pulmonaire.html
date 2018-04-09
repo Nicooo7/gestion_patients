@@ -24,7 +24,7 @@
 
 
 								   	<!-- formulaire générique pour générer un compte rendu spécifique -->	
-								   	{% include "html/crSpecifique.html" with idItemIndication=e.formule ItemIndication=e.label_element cible=e.cible  defautTechnique="Radiographie des poumons de face" %} 
+								   	{% include "html/crSpecifique.html" with idItemIndication=e.formule ItemIndication=e.label_element cible=e.cible  defautTechnique=e.defaut %} 
 
 							{% endif %}
 						{% endfor %}
