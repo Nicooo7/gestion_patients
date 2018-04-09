@@ -119,4 +119,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_ROOT = "/var/www/revendication/static/"
+
+MEDIA_ROOT = 'gestion_patients/media/'
+
+
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "gestion_patient/static"),
+    )
+
+
+
 STATIC_URL = '/static/'
