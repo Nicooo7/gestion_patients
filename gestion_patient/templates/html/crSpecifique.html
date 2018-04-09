@@ -6,7 +6,8 @@
 		$('.optionnel').hide()	
 		$('[id="{{idItemIndication}}"]').click(function()
 						{
-						$(".ELEMENTS_SPECIFIQUES_DE_{{itemIndication}}").toggle()
+
+						$(".{{cible}}").toggle()
 						});
 
 
@@ -71,8 +72,7 @@
 
 					
 			        copyToClipboard(toCopy, id="#textarea");
-  			   			 					
-					alert(texte_final)	
+  			   			 						
 									
 
 									});

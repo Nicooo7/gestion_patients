@@ -154,21 +154,24 @@ def radiographie_poumon(request):
         liste_des_titres=[]
         liste_des_intitules_des_titres = []
 
-        def __init__ (self, titre_item, label_element, categorie, formule, defaut, optionnel):
+        def __init__ (self, titre_item, label_element, categorie, formule, defaut, optionnel, cible=""):
             self.titre_item= titre_item
             self.label_element = label_element
             self.formule= formule
             self.categorie = categorie
             self.defaut= defaut
             self.optionnel= optionnel
+            self.cible = cible
 
             for at in self.__dict__.values():
                 at = mark_safe(at)
 
             Item.liste_des_items.append(self)
 
+
+            #créer un titre de rubrique optionnel
             if self.titre_item not in Item.liste_des_intitules_des_titres:
-                t = Titre(intitule=self.titre_item, optionnel=self.optionnel, cl=self.titre_item.replace(" ","_"))
+                t = Titre(intitule=self.titre_item, optionnel=self.optionnel, cl=self.categorie)
                 Item.liste_des_intitules_des_titres.append(t.intitule)
                 Item.liste_des_titres.append(t)
 
@@ -202,7 +205,7 @@ def radiographie_poumon(request):
 
 
     #INDICATIONS:
-    Item(titre_item="INDICATION", label_element="dyspnée", categorie="indication", formule="Bilan de dyspnée", defaut= "", optionnel="non")   
+    Item(titre_item="INDICATION", label_element="dyspnée", categorie="indication", formule="Bilan de dyspnée", defaut= "", optionnel="non", cible="resultat_dyspnee")   
     Item(titre_item="INDICATION", label_element="douleur thoracique", categorie="indication", formule="Douleurs thoraciques", defaut= "", optionnel="non") 
     Item(titre_item="INDICATION", label_element="traumatisme", categorie="indication", formule="bilan post-traumatique", defaut= "", optionnel="non")      
     Item(titre_item="INDICATION", label_element="syndrome infectieux", categorie="indication", formule="Bilan dans un context de syndrome infectieux", defaut= "", optionnel="non") 
