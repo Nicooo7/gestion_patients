@@ -7,22 +7,41 @@
         <title>Titre</title>
 
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
-        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
         
     </head>
 
-    <body class="grey lighten-2">
+    <body class="white lighten-2">
 
-            
+        <nav>
+            <div class="nav-wrapper blue lighten-2">
+              <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="{% url 'scanner'%}">Scanner</a></li>
+                <li><a href="{% url 'radiographies'%}">Radiographies</a></li>
+                <li><a href="{% url 'irm'%}">IRM</a></li>
+                <li><a href="{% url 'accueil'%}">Acceuil</a></li>
+                <li><a class="btn waves-effect blue tooltipped " data-tooltip="réinitialiser" onclick="location.reload(true)"><i class="material-icons">autorenew</i></a></li>
+                <li><a class="btn waves-effect blue tooltipped " data-tooltip="lancer le guide interactif" onclick="$('.premiere').dialog({height:400, width:800})";><i class="material-icons">child_friendly</i></a></li>
+            </ul>
+            <h3 class="title center">{% block titre %} SCANNER {% endblock titre %}</h3>
 
-        <div class="titre blue"> <h3 class="center">{% block titre %} SCANNER  {% endblock titre %}</h3> </div>
-        <div class="section"></div>
-        
+        </nav> 
+
+        <div class="section"></div> 
+    
+      
+     <!-- guide interactif -->  
+    {% if guide %} 
+    {% include "html/guide.html" with guide=guide %}
+    {% endif %}
+
+
     {% block regions_anatomiques %}
         {% for item in liste %}
             {% include "html/collapsible_double.html" with a=item.region_anatomique liste=item.sous_rubriques titre=titre adresseImage=item.adresseImage path="Users/nicolas/Desktop/urgences/gestion_patient/static"%} 
@@ -35,8 +54,9 @@
 <script>
 $(document).ready(function() {
     M.AutoInit();
-    
+    $('.optionnel').hide()
     $('select').formSelect();
+    $('.tooltipped').tooltip();
     $('#id_indication').css("height","100px");
     $('#bouton_afficher').click(function(){
             document.location.href="afficher_patient.html"; 
@@ -54,7 +74,6 @@ $(document).ready(function() {
 
 {% block autre_script %}
 {% endblock autre_script %}
-
 
 {% block CRspecifique %}
 {% endblock CRspecifique %}

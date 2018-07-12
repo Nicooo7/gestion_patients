@@ -124,7 +124,6 @@ STATIC_ROOT = "/var/www/revendication/static/"
 MEDIA_ROOT = 'gestion_patients/media/'
 
 
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "gestion_patient/static"),
     )

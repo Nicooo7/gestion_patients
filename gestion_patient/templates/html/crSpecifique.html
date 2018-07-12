@@ -1,90 +1,72 @@
 <script>
+
 	
 	$(document).ready(function() {
+		
 
 		
-		$('.optionnel').hide()	
-		$('[id="{{idItemIndication}}"]').click(function()
-						{
+		//lorsqu'on clique sur un élément de type input, on affiche son élément cible	
+		$(':input').click(function()
+						{												
+						var cible = $(this).attr('cible') //afficher les attributs cible
+						if (cible != ""){
+							$("."+cible).toggle('slow')
+							}
 
-						$(".{{cible}}").toggle()
 						});
 
-
 		
-		$("#soumission").click(function() {
 
-		//fonction retournant un paragraphe, selon les cases cochées dans ce paragraphe
-			function paragraphe(base, cat, defaut){		
-												var liste = [];
-													$(':input[categorie='+cat+']').each(function() {
-
-														if ($(this).is(':checked'))
-															{liste.push($(this).attr('id'));}
-													   	else 
-													   		{liste.push($(this).attr('defaut'));}
-													   	resultat = base  
-														for (l in liste) {
-
-															if (liste[l] != "") {resultat = resultat + "\n" + liste[l]}
+		$("#soumission").click(function(cible) {
 
 
+			function ecriture(){
 
-																			}
+					//remise à zero des rubriques 
+					$(".rubrique").each(function(){
 
-													  });
+						$(this).text("")
+						$(this).hide()
+					}
 
-												return resultat
+						)
 
-											  
-												}
+					//on implémente les rubriques en fonction des items cochés
+					$(':input').each(function() {
+							cl = $(this).attr("categorie")
+							rubrique = $("#"+"rubrique"+cl)
+								if ($(this).is(':checked')){
+									rubrique.append("\n"+$(this).attr('id')+$(this).text());
+									}
+						   			else if ($(this).attr('defaut') != "" )
+						   			{	
+						   			rubrique.append("\n"+ $(this).attr('defaut')+$(this).text());
+									}
+									
 
-		//fonction retournant la conclusion, selon le texte écrit dans ce paragraphe:
-			function concl(base, cat, defaut){
-												var liste = [];
-												$(':input[type="text"][categorie='+cat+']').each(function() {liste.push($(this).text());});
-												resultat = base  
-												for (l in liste) {resultat = resultat + " " + liste[l]} 
-												return resultat   
-												}								
+								});
 
-
-				
-
-
-						
-				//INDICATION:	
-					indication = paragraphe(base="", cat="indication", defaut="{{defautIndication}}")		
-
-				//TECHNIQUE: 	
-					technique = paragraphe(base="", cat="technique", defaut="{{defautTechnique}}")		
-				
-				//RESULTAT:
-					//spécifique :
-					if ($(".{{cible}}").is(":visible"))
-						{resultats = paragraphe(base="", cat="{{cible}}")+ "\n"
-						resultats_autres = ""}
-					else {
-						resultats =""
-						resultats_autres = paragraphe(base="", cat="resultat_autre")+ "\n"}
-
-					corps = resultats + resultats_autres
+							}
+							
+			ecriture()				
 
 
-				//CONCLUSION:
-					conclusion = concl(base="", cat="conclusion")+ "\n"	
-
-			
-					texte_final= "Compte rendu radiologique pour les urgences:\n\nINDICATION:" + indication + "\n\n" + "TECHNIQUE:" + technique + "\n\n"+ "RESULTATS:" + corps
-					var toCopy  = texte_final
+			// on récupère le texte des rubriques implémentés
+			texteFinal=""
+			$(".rubrique").each(function(){
+				classParent = $(this).attr("classParent")
+				if ($("."+ classParent).is(":visible")){
+				texteFinal = texteFinal + "\n\n" + $(this).attr("titre")+ $(this).text()
+				}
+				});
+					
+					var toCopy  = texteFinal
 
 					
 			        copyToClipboard(toCopy, id="#textarea");
   			   			 						
-									
+				
 
-									});
-
-
+				});
 		});
 	</script>

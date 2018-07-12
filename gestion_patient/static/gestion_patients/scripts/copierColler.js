@@ -12,8 +12,12 @@
 		
 		
 		$("#CRTYPE").click(function() {
-
-			compteRenduType = "Relecture de radiographies pour les urgences\n\n" + compteRenduType.replace(/xx/g,"\n")
+			Resultat = "{{page}}".indexOf("radio");
+			if (Resultat != -1)//si on  est sur une page radio
+			{compteRenduType = "Relecture de radiographies pour les urgences\n\n" + compteRenduType.replace(/xx/g,"\n")}
+			else
+			{compteRenduType = compteRenduType.replace(/xx/g,"\n")}
+			
 			copyToClipboard(compteRenduType, id="#textarea");
   			   			 					
 				

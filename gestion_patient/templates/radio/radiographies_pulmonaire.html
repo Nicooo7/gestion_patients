@@ -1,10 +1,13 @@
-{% extends "radiographies.html" %}
+{% extends "radio/radiographies.html" %}
 {% load static %}
 
 
 {% block contenu %}
 	
 {% block menu %}
+
+
+
 
 <div class="row">
 	<div class="col s8">
@@ -13,25 +16,38 @@
 			        <li>
 			        	{% if t.optionnel == "oui" %}
 							<div class="collapsible-header optionnel {{t.cl}}"  id="{{t.intitule}}"><i class="material-icons">filter_drama</i>{{t.intitule}}</div>
+							
 						{% else %}
 			        		<div class="collapsible-header {{t.cl}}"  id="{{t.intitule}}"><i class="material-icons">filter_drama</i>{{t.intitule}}</div>
 			        	{% endif %}
+			        	<div id="rubrique{{t.cl}}" titre="{{t.intitule}}" class="rubrique" classParent="{{t.cl}}"> </div>
+
 			        	<div class="collapsible-body">
 			        	{% for e in liste_des_items %}
 			        		{% if e.titre_item == t.intitule %}
 			        				<!-- formulaire générique pour creer chacune des cases à cocher -->	
-								   	{% include "html/formulaire_generique.html" with element_a_cocher=e.label_element id=e.formule categorie=e.categorie defaut=e.defaut optionnel=e.optionnel %}
+								   	{% include "html/formulaire_generique.html" with element_a_cocher=e.label_element id=e.formule categorie=e.categorie defaut=e.defaut optionnel=e.optionnel dialog=e.dialog cible=e.cible tooltip=e.tooltip  defaut=e.defaut%}
 
-
-								   	<!-- formulaire générique pour générer un compte rendu spécifique -->	
-								   	{% include "html/crSpecifique.html" with idItemIndication=e.formule ItemIndication=e.label_element cible=e.cible  defautTechnique=e.defaut %} 
-
+	   	
 							{% endif %}
 						{% endfor %}
+						<!-- formulaire générique pour générer un compte rendu spécifique -->	
+						
 						</div>
 			        </li>
 				</ul>
 			{% endfor %}
+
+			{% include "html/crSpecifique.html" %} 
+
+			{% include "html/carteGenerique.html" with listeCarte=listeCarte %} 
+
+		{% if carteSpecifique %}	
+			{% include "html/cartePirads.html" with carte=carteSpecifique %}
+		{% endif %}
+	
+
+
 	{% endblock menu %}
 	</div>
 
@@ -83,9 +99,8 @@
 {% block autre_script %}
 	<script type="text/javascript"> var compteRenduType = "{{compteRenduType}}"; var secondeVariable = "valeur"; </script>
 	<script src="{% static 'gestion_patients/scripts/copierColler.js' %}"></script>
+
 {% endblock autre_script%}	
 
-{% block CRspecifique %}
-    {% include "html/crSpecifique.html" with idItemIndication=t.intitule ItemIndication="DYSPNEE"   defautTechnique="Radiographie des poumons de face" %}    
-{% endblock CRspecifique %}
+
 

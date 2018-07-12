@@ -1,0 +1,190 @@
+ <div id="{{carte.titre}}" title="{{carte.titre}}">
+
+
+  <form action="#">
+
+
+
+                <table>
+                   <tr>
+                     {% for lesion in carte.listeLesion %}
+                      <th>{{lesion}}</th>
+                      {% endfor %}
+                   </tr>
+
+                   {% for select in carte.listeSelect %}
+                   <tr> 
+                      {% for lesion in carte.listeLesion%}
+                        <td>
+                            <div class="section"></div>
+                              <a class="btn blue" data-tooltip="{{select.tooltip}}"> <select class="select{{lesion}}" select="{{select.titre}}" ></a>
+                                <option value="" id="" disabled selected class="btn tooltipped"  data-position="left" data-tooltip="informations"> {{select.titre}} </option>
+                                  {% for item in select.listeOption %}
+                                  <option value="{{item.formule}}"> {{item.label_element}}  </option>
+                                  {% endfor %}
+                              </select>
+                        </td>
+                        {% endfor %}
+                   </tr>
+                   {% endfor %}
+
+                   <tr>
+                      {% for lesion in carte.listeLesion%}
+                      <td ><a class="btn"> <input type="textarea" id="pirads{{lesion}}"/></a></td>
+                      {% endfor %}
+                   </tr>
+                </table>
+
+ </form >
+
+      <script>var listeLesion = []</script>
+  {% for lesion in carte.listeLesion %}
+    <script> listeLesion.push("{{lesion}}")</script>
+    <div id="colonne{{lesion}}" zone="" diffusion="" tdeux="" rehaussement="" lateralisation="" phrase="{{lesion}}: <br>">
+      COLONNE
+    </div>
+  {% endfor %}                          
+
+</div>
+ 
+   <script>   
+            
+              $("#{{carte.titre}}").hide()
+   </script>
+
+
+
+
+
+          <script>
+              $("#{{carte.titre}}").mouseup(function(){
+                                
+                                // pour chaque lésion 
+                                  for (var i in listeLesion){
+                                   var lesion =listeLesion[i]
+                                   
+                                   //pour chaque select d'une colonne donnée
+                                    $(".select"+lesion+ " option:selected").each(function(){
+
+                                             colonne = $("#colonne"+lesion)
+                                             
+                                              if ($(this).attr("select") == "diffusion")
+                                                {colonne.attr("diffusion",$(this).val())
+                                                colonne.attr("phrase",colonne.attr("phrase")+$(this).text())}
+
+                                              if ($(this).attr("select") == "T2")
+                                                {colonne.attr("tdeux",$(this).val())
+                                                colonne.attr("phrase",colonne.attr("phrase")+$(this).text())}
+
+                                              if ($(this).attr("select") == "rehaussement")
+                                                {colonne.attr("rehaussement", $(this).val())
+                                                colonne.attr("phrase",colonne.attr("phrase")+$(this).text())}
+
+                                              if ($(this).attr("select") == "zone")
+                                                {colonne.attr("zone", $(this).val())
+                                                colonne.attr("phrase",colonne.attr("phrase")+$(this).text())}
+
+                                              if ($(this).attr("select") == "lateralisation")
+                                                {colonne.attr("lateralisation", $(this).val())
+                                               colonne.attr("phrase",colonne.attr("phrase")+$(this).text())}
+
+                                              diffusion= colonne.attr("diffusion")
+                                              tdeux = colonne.attr("tdeux")
+                                              rehaussement = colonne.attr("rehaussement")
+                                              zone = colonne.attr("zone")
+
+                                               pirads = diffusion
+                                            
+                                                if (zone == "transitionnelle"){
+                                                if ((diffusion == 3) && (dynamique == "positif"))
+                                                        {pirads = 4}
+                                                if ((diffusion == 3) && (dynamique == "negatif"))
+                                                        {pirads = 3} 
+                                                      }
+                                        
+                                               if (zone == "periphérique"){
+                                                pirads = tdeux}
+                                                if ((tdeux == 3)&&(diffusion <= 4))
+                                                        {pirads = 3}
+                                                if ((tdeux == 3)&&(diffusion > 4))
+                                                        {pirads = 4} 
+
+
+                                             $("#pirads" + lesion).val("pirads:" + pirads) 
+
+
+                                              });
+                                            }
+                                         });
+
+
+            </script>
+ 
+
+            <script>
+   $(document).ready(function() {
+
+            
+
+          $(".material-tooltip").addClass("Text black")
+          $(".material-tooltip").css({ 
+                        width : '250px', 
+                          });
+
+
+          declencheur =  $('[dialoguer="{{carte.titre}}"]')
+          declencheur.click(function() { 
+              $("#{{carte.titre}}").dialog({
+  height: 1500, width: 1500
+});   
+            });
+    
+
+// FONCTION DECLENCHEE LORSQUE LA BOITE DE DIALOGUE EST FERMEE: REDACTION DE LA PARTIE DU COMPTE RENDU DE LA CARTE:
+
+    $( "#{{carte.titre}}").on( "dialogclose", function( event, ui ) {
+      //une liste par type de choix
+      var liste = []
+      var resultat = ""
+
+
+                            
+
+
+
+                            //recupération des phrases de chaque colonne
+                          
+                          texteLesions = ""  
+                          
+                          for (i in listeLesion){
+                                                     lesion = listeLesion[i]
+                                                     colonne = $("#colonne"+lesion)
+                                                     phraseLesion = colonne.attr("phrase")
+                                                     texteLesions =texteLesions + phraseLesion + "\n"
+
+                                                     }
+
+
+                          declencheur =  $('[dialoguer="{{carte.titre}}"]').first()        
+                          declencheur.text(texteLesions)
+                      
+                       
+                          
+    } );   
+
+
+ });
+
+
+  </script>
+
+
+
+      
+
+        
+
+
+
+
+

@@ -34,7 +34,9 @@ urlpatterns = [
 #____________________________________________CR type________________________________
 
      url(r'^scanner', views.scanner, name = 'scanner'),
-     url(r'^radiographies/$', views.radiographies, name = 'radiographies'),
+
+     #RADIO
+     url(r'radiographies/$', views.radiographies, name = 'radiographies'),
      url(r'radiographies/pulmonaire/$', views.radiographie_poumon, name = 'radiographies_pulmonaire'),
      url(r'radiographies/cheville/$', views.radiographie_cheville, name = 'radiographies_cheville'),
      url(r'radiographies/epaule/$', views.radiographie_epaule, name = 'radiographies_epaule'),
@@ -44,12 +46,25 @@ urlpatterns = [
      url(r'radiographies/pied/$', views.radiographie_pied, name = 'radiographies_pied'),
      url(r'radiographies/main/$', views.radiographie_main, name = 'radiographies_main'),
      url(r'radiographies/bassin/$', views.radiographie_bassin, name = 'radiographies_bassin'),
-     url(r'radiographies/rachis_lombaire/$', views.radiographie_rachis_lombaire, name = 'radiographies_rachis_lombaire'),
-     url(r'radiographies/rachis_dorsal/$', views.radiographie_rachis_dorsal, name = 'radiographies_rachis_dorsal'),
+     url(r'radiographies/rachis lombaire/$', views.radiographie_rachis_lombaire, name = 'radiographies_rachis_lombaire'),
+     url(r'radiographies/rachis dorsal/$', views.radiographie_rachis_dorsal, name = 'radiographies_rachis_dorsal'),
+     url(r'radiographies/rachis cervical/$', views.radiographie_rachis_cervical, name = 'radiographies_rachis_cervical'),
      url(r'radiographies/bras/$', views.radiographie_bras, name = 'radiographies_bras'),
-      url(r'radiographies/jambe/$', views.radiographie_jambe, name = 'radiographies_jambe'),
+     url(r'radiographies/jambe/$', views.radiographie_jambe, name = 'radiographies_jambe'),
      url(r'radiographies/avant_bras/$', views.radiographie_avant_bras, name = 'radiographies_avant_bras'),
      url(r'radiographies/cuisse/$', views.radiographie_cuisse, name = 'radiographies_cuisse'),
+
+     #IRM
+     url(r'irm/$', views.irm, name = 'irm'),
+     url(r'irm/cardiaque/$', views.irm_cardiaque, name = 'irm_cardiaque'),
+     url(r'irm/prostate/$', views.irm_prostate, name = 'irm_prostate'),
+     url(r'irm/cerebrale/$', views.irm_cerebrale, name = 'irm_cerebrale'),
+     url(r'irm/foie/$', views.irm_foie, name = 'irm_foie'),
+     url(r'irm/genou/$', views.irm_genou, name = 'irm_genou'),
+     url(r'irm/rachis_lombaire/$', views.irm_rachis_lombaire, name = 'irm_rachis_lombaire'),
+
+
+     url(r'commandeVocale/$', views.commandeVocale, name = 'commandeVocale'),
 
      url(r'^accueil', views.accueil, name = 'accueil'),
     ]

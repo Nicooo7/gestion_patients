@@ -1,0 +1,188 @@
+
+<META HTTP-EQUIV="Refresh" CONTENT="15"; URL={{urlDeLaPagel}}> 
+</META>
+<h1> Je suis à votre écoute </h1>
+
+
+Parlez distinctement devant votre micro, pour aller sur l'une des rubriques suivantes:
+<button onclick="recognition.start()">Start</button>
+<button onclick="recognition.stop()">Stop</button><br>
+<textarea id="textarea" rows=10 cols=100 class="zoneDeSaisieVocale"></textarea><br>
+
+
+<script> //$(".zoneDeSaisieVocale").hide() </script>
+
+Taux de confiance de la reconnaissance vocale : <span id="span">...</span><br>
+
+
+
+<script>//script des diverses actions de reconnaissance vocale
+
+// paramétrage de la reconnaissance vocale	
+	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+	recognition = new SpeechRecognition()
+	recognition.continuous = true
+	recognition.lang = "fr-FR"
+
+
+// fonction permettant d'écouter l'utilisateur et retournant la derniere expression ennoncée
+function ecouter(){
+	recognition.start();
+	recognition.onresult = function (event) {
+		var phrase= ""
+		for (i = event.resultIndex; i < event.results.length; i++) {
+				phrase = phrase += event.results[i][0].transcript
+				textarea.value += event.results[i][0].transcript + "\n";
+				url(phrase)		
+		}
+				//document.getElementById("span").innerHTML =
+				//	Math.round(event.results[i][0].confidence * 100) + " %";
+	}
+	var dernierMot = phrase.replace(/[\s-]+$/, '').split(/[\s-]/).pop();
+	return dernierMot
+}
+
+// fonction permettant d'ennoncer un texte 
+function parler(texte){
+	ssu.text = texte
+	parler = speechSynthesis.speak(ssu)
+}
+
+// objet option (un intitulé et un item cible à ouvrir)
+function option(intitule,cible){
+	this.intitule = intitule
+	this.cible = cible
+}
+
+// objet item permettant de creer une carteItem
+function item(nom, question, options, listeDesItem) {
+  this.question = question;
+  this.option = option.intitule;
+  this.cibleOption = option.cible;
+  listeDesItem.push(this)
+
+}
+
+
+// implémentation de la liste des items:
+var listeDesItem = []
+function indication (listeDesItem){
+	nom = "itemIndication"
+	question = "quelle est l'indication"
+	option1 = new option(
+		intitule = "dépistage",
+		cible = "Technique"
+		)
+	option2 = new option(
+		intitule = "traumatisme",
+		cible = "technique"
+		)
+	options = {option1, option2}
+	var item = new item(nom, question, options)
+}
+function technique (listeDesItem){
+	nom = "itemTechnique"
+	question = "Un profil a-t-il été réalisé"
+	option1 = new option(
+		intitule = "oui",
+		cible = "itemResultat"
+		)
+	option2 = new option(
+		intitule = "traumatisme",
+		cible = "itemNodule"
+		)
+	options = {option1, option2}
+	var item = new item(nom, question, options)
+}
+
+function resultat (listeDesItem){
+	nom = "itemNodule"
+	question = "Y a-t-il des nodules pulmonaires"
+	option1 = new option(
+		intitule = "oui",
+		cible = "itemNoduleDetail"
+		)
+	option2 = new option(
+		intitule = "non",
+		cible = "itemAutreAnomalie"
+		)
+	options = {option1, option2}
+	var item = new item(nom, question, options)
+}
+
+// processus d'une carteItem:
+function carteItem(item, listeDesItem){
+
+			parler(item.question)  // ennoncer la question
+
+			parler("les réponses possibles sont")// proposer les réponses
+			for (option of item.options{   
+				parler(option.intitule)
+			}
+
+			reponse = ecouter() // écouter la réponse
+
+
+			for (option of item.options){       // définir l'item cible
+				if (reponse.search(option.cible) != -1){ 
+					var cible = option.cible
+				}
+			}	
+			
+			for (item in listeDesItem){	// ouvrir la carteItem correspondant à la cible
+				if (item.nom == cible){
+					carteItem(item)
+				}		
+			}
+}
+
+// fonction pour aller à un autre endroit en fonction de la phrase pronnoncée.
+function url(phrase){
+
+	var dernier_mot = phrase.replace(/[\s-]+$/, '').split(/[\s-]/).pop();
+
+	var root="http://localhost:8000/"
+
+
+	if (phrase.search("radiographie") != -1) {
+	document.location.href=(root + "radiographies/");
+	}
+	if (phrase.search("scanner") != -1) {
+	window.open(root + "scanner/");
+	}
+	if (phrase.search("irm") != -1) {
+	window.open(root + "irm/");
+	}
+
+	if (phrase.search("va sur Radio") != -1) {
+	window.open("http://www.radiopaedia.org");
+	}
+
+	if (phrase.search("va sur Google") != -1){
+		var fenetreGoogle = window.open("http://www.google.fr");
+	}
+	
+	if (phrase.search("répéter") != -1){
+		speechSynthesis.speak(ssu)
+	}
+	
+	
+	if (phrase.search("cherche sur Wikipédia le mot") != -1){
+	window.open("https://fr.wikipedia.org/wiki/" + dernier_mot);
+	}
+	return fenetreGoogle
+}
+
+
+//lancer la premiere carte item
+premierItem = listeDesItem[0]
+carteItem (premierItem)
+
+</script>
+
+
+
+
+
+
+

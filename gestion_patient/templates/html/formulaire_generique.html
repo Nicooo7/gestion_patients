@@ -1,8 +1,11 @@
 
 
 <form action="#">
+				{% if tooltip != "vide" %}
+                    <div class="btn-floating btn teal tooltipped" data-position="left" data-tooltip="{{select.tooltip}}"><i class="material-icons">help</i></div>
+                 {% endif %}
     <p>
-        <input type="checkbox" id="{{id}}" categorie="{{categorie}}" defaut="{{defaut}}"/>
+        <input type="checkbox" id="{{id}}" categorie="{{categorie}}" defaut="{{defaut}}" dialoguer="{{dialog}}" cible="{{cible}}"/>
         <label for="{{id}}">{{element_a_cocher}} </label>
     </p>
 </form>

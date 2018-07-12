@@ -1,0 +1,48 @@
+
+
+{% for etape in guide.etapes %}
+
+
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card blue darken-3 carteGuide {{etape.premiere}}" id="{{etape.titre}}" >
+        <div class="card-content white-text">
+          <h4> {{etape.question}} </h4>
+        </div>
+        <div class="card-action">
+          <a id="guideOui" href="#"  phrase="{{etape.oui}}" onclick="action('{{etape.titre}}','{{etape.ouiCible}}')" >OUI</a>
+          <a id="guideNon" href="#"  phrase="{{etape.non}}" onclick="action('{{etape.titre}}','{{etape.nonCible}}')">NON</a>
+          <a id="guidePasser" href="#" phrase="{{etape.passer}}" onclick="action('{{etape.titre}}','{{etape.ouiCible}}')">PASSER</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endfor %}
+
+
+
+
+
+<script>
+$(".carteGuide").hide() 
+
+//fonction permettant de fermer la carte actuelle et d'ouvrir la nouvelle carte.
+function action(carte, cible){
+  $(".carteGuide").dialog("close");
+  $("#"+ cible).dialog();
+  }
+ 
+</script>
+
+
+
+      
+
+        
+
+
+
+
+

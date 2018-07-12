@@ -1,0 +1,198 @@
+
+
+{% for carte in listeCarte %}
+ 
+<div id="{{carte.titre}}" title="{{carte.titre}}">
+
+{% if carte.calcul == "volume" %}
+<h4> volume: <input type="textarea" id="xx"> </h4>
+{% endif %}
+
+
+
+  <form action="#">
+
+
+
+              <!-- RANGES -->
+              
+                {% for item in carte.listeRange %}
+
+                    
+                    {% if item.tooltip != "vide" %}
+                    <div class=" btn-floating btn teal tooltipped" data-position="left" data-tooltip="{{item.tooltip}}"><i class="material-icons">{{item.label_element}}help</i></div>
+                    {% endif %}
+                    <p class="range-field">
+                      {{item.label_element}}
+                      <p id="AfficheRange{{item.formule}}"> valeur sélectionnée: </p>
+                      <input class="Range" type="range" id="{{item.formule}}" min="{{item.min}}" max="{{item.max}}" defaultValue="{{item.moy}}" calcul="{{carte.calcul}}"
+                      oninput="document.getElementById('AfficheRange{{item.formule}}').textContent=value;">
+
+                      <script>document.getElementById('AfficheRange{{item.formule}}').textContent="{{item.moy}}"</script>
+
+                    
+                     </p> 
+                    <div class="section"></div>
+                    <div class="section"></div>
+
+              {% endfor %}
+             
+
+
+
+                    <div class="section"></div>
+                    <div class="section"></div>
+                    <div class="section"></div>
+
+
+
+              <!-- SELECT -->
+              <div class="input-field col s12 ">
+                  {% for select in carte.listeSelect %}
+
+                  {% if select.tooltip != "" %}
+                    <div class="btn-floating teal tooltipped" data-position="left" data-tooltip="{{select.tooltip}}"><i class="material-icons">help</i></div>
+                  {% endif %}  
+                    <div class="section"></div>
+                      <select >
+                        <option value="" id="" disabled selected class="btn tooltipped"  data-position="left" data-tooltip="informations"  > {{select.titre}} </option>
+                          {% for item in select.listeOption %}
+                          <option value="1" id="{{item.formule}}">{{item.label_element}} </option>
+                          {% endfor %}
+                      </select>
+                 {% endfor %}
+              </div>    
+
+
+                  <div class="section"></div>
+                    <div class="section"></div>
+                    <div class="section"></div>
+
+
+
+
+              <!-- Checkboxes -->
+              <div class="section"></div>
+              <p class="carte">
+              {% for e in carte.listeCase%}
+              {% include "html/formulaire_generique.html" with element_a_cocher=e.label_element id=e.formule categorie=e.categorie defaut=e.defaut optionnel=e.optionnel dialog=e.dialog %}
+              {% endfor %}
+              </p>
+
+
+              
+              
+
+  </endform> 
+
+</div>
+ 
+   <script>
+
+   $("#{{carte.titre}}").hide()
+
+
+   //___________________________________________CALCULS___________________________________________
+
+   $(".Range").mouseup(function(){
+
+                                // calcul de volume
+                                  var liste=[];
+                                  $('.Range[calcul="volume"]').each(function(){
+                                   valeur = $(this).val()
+                                   liste.push(valeur)
+                                    });
+                                    
+                                  var resultat = (liste[0] * liste[1] * liste[2])/1000;
+                                  $("input[id='xx']").val(resultat+ "cc");
+                                        });
+
+
+                                  
+
+   $(document).ready(function() {
+
+            
+
+          $(".material-tooltip").addClass("Text black")
+          $(".material-tooltip").css({ 
+                        width : '250px', 
+                          });
+
+
+          declencheur =  $('[dialoguer="{{carte.titre}}"]')
+          declencheur.click(function() { 
+              $("#{{carte.titre}}").dialog({
+  height: 800, width: 500
+});   
+            });
+    
+
+// FONCTION DECLENCHEE LORSQUE LA BOITE DE DIALOGUE EST FERMEE: REDACTION DE LA PARTIE DU COMPTE RENDU DE LA CARTE:
+
+    $( "#{{carte.titre}}").on( "dialogclose", function( event, ui ) {
+      //une liste par type de choix
+      var liste = []
+      var resultat = ""
+
+
+                            
+
+
+
+                            //recupération des données des select
+                          $("#{{carte.titre}} option:selected").each(function() {
+                            liste.push($(this).attr("id"));
+                              });
+
+                          //recupération des données des ranges
+                           $("#{{carte.titre}}  .Range").each(function() {
+                            valeur = $(this).val()
+                              calcul= $(this).attr("calcul")
+                            if (calcul == "vide"){ 
+                              // exclure les données servant au calcul
+                            liste.push($(this).attr("id")+ valeur);}
+                            });
+
+                           //recupération du résultat du calcul:
+                           ResCalc = $("#{{carte.titre}} input[id='xx']").val()
+                           liste.push(ResCalc)
+
+
+                          //recupération des données des checkboxes
+                          $('.carte > input :checked').each(function() {
+                            {
+                              liste.push($(this).attr('id'));}
+                              });
+
+
+                           for (l in liste) {
+                              if (typeof liste[l] != "undefined") {resultat = resultat + liste[l] + "\n"}
+                                      }
+                           
+                          declencheur =  $('[dialoguer="{{carte.titre}}"]').first()        
+                          declencheur.text(resultat)
+                      
+                       
+
+    } );   
+
+
+ });
+
+
+
+
+  </script>
+ 
+{% endfor %}
+
+
+      
+
+        
+
+
+
+
+
